@@ -6,7 +6,7 @@ import {
     ResponseLogin
 } from "../config/config.js";
 import {
-    URLLogin
+    UrlLogin
 } from "../template/template.js";
 import {
     token
@@ -17,6 +17,6 @@ document.addEventListener("DOMContentLoaded", function () {
     form.addEventListener("submit", function (event) {
         event.preventDefault();
         let data = PostLogin();
-        postWithToken(URLLogin, 'Authorization', 'Bearer ' + token, data, ResponseLogin);
+        postWithToken(UrlLogin, 'Authorization', 'Bearer ' + token, data, ResponseLogin);
     });
 });
