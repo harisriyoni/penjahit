@@ -16,6 +16,19 @@ export function getTokenFromAPI() {
         .catch(error => console.error('Gagal mengambil token:', error));
 }
 
+export function GetDataForm() {
+    const username = document.querySelector("#username").value;
+    const password = document.querySelector("#password").value;
+    const role = document.querySelector("#role").value;
+
+    const data = {
+        username: username,
+        password: password,
+        role: role
+    };
+    return data
+}
+
 // post login
 export function PostLogin() {
     const username = document.getElementById("username").value;
