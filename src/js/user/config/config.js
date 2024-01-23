@@ -2,7 +2,9 @@ import {
     setCookieWithExpireHour
 } from 'https://jscroot.github.io/cookie/croot.js';
 
-//token
+let userToken;
+
+//token api
 export function getTokenFromAPI() {
     const tokenUrl = "https://lap-umkm.herokuapp.com/ksi/users/login";
     fetch(tokenUrl)
@@ -16,12 +18,11 @@ export function getTokenFromAPI() {
         .catch(error => console.error('Gagal mengambil token:', error));
 }
 
-//get data
+//get data 
 export function GetDataForm() {
     const username = document.querySelector("#username").value;
     const password = document.querySelector("#password").value;
     const role = document.querySelector("#role").value;
-    console.log(password)
 
     const data = {
         username: username,
@@ -30,7 +31,8 @@ export function GetDataForm() {
     };
     return data
 }
-//login
+
+// post login
 export function PostLogin() {
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
@@ -44,25 +46,66 @@ export function PostLogin() {
     return data;
 }
 
+// alert post 
 export function AlertPost(value) {
-    alert(value.message + "\nRegistrasi Berhasil")
-    window.location.href = "https://harisriyoni.github.io/penjahit/public/login.html"
+    Swal.fire({
+        icon: 'success',
+        title: 'Daftar Berhasil',
+        text: 'Anda telah berhasil daftar!',
+    });
+    window.location.href = "login.html"
 }
 
+function validateLogin(callback) {
+    // Implement your login validation logic here
+    // Make asynchronous API calls if needed
 
+    // Example: Simulating asynchronous behavior
+    setTimeout(() => {
+        const isValid = true; // Replace with your actual validation logic
+        callback(isValid);
+    }, 1000); // Simulating a delay of 1 second
+}
+
+// response post login
 function ResponsePostLogin(response) {
     if (response && response.token) {
-        // console.log('Token User:', response.token);
         setCookieWithExpireHour('Login', response.token, 2);
-        window.location.href = 'https://harisriyoni.github.io/penjahit/public/dashboard.html';
-
-
-        alert("Selamat Datang")
+        window.location.href = 'https://pakarbi.vaidiq.cloud/pages/dashboard.html';
+        Swal.fire({
+            icon: 'success',
+            title: 'Masuk Berhasil',
+            text: 'Anda telah berhasil masuk!',
+        });
     } else {
-        alert('Login gagal. Silakan coba lagi.');
+        Swal.fire({
+            icon: 'error',
+            title: 'Gagal Masuk',
+            text: 'NPM atau Kata Sandi tidak valid. Silakan coba lagi.',
+        });
     }
 }
 
+// handle login
+export function HandleLogin() {
+    // Assuming you have a function to validate the login credentials.
+    const isValidLogin = validateLogin(ResponsePostLogin);
+
+    if (isValidLogin) {
+        // Set npm and nama based on your login logic.
+        username = document.getElementById("username").value;
+
+        // You can also redirect the user to the dashboard here.
+        window.location.href = 'https://harisriyoni.github.io/penjahit/public/dashboard.html';
+    } else {
+        // Handle invalid login
+        Swal.fire({
+            icon: 'error',
+            title: 'Gagal Masuk',
+            text: 'Username atau Kata Sandi tidak valid. Silakan coba lagi.',
+        });
+    }
+}
 
 export function ResponsePost(result) {
     AlertPost(result);
