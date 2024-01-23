@@ -36,12 +36,10 @@ export function GetDataForm() {
 export function PostLogin() {
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
-    const role = document.getElementById("role").value;
 
     const data = {
         username: username,
         password: password,
-        role: role
     };
     return data;
 }
