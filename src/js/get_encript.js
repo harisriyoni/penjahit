@@ -20,7 +20,7 @@ const getData = async () => {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',
-              'Login': token,
+              'login': token,
           },
           body: JSON.stringify({ waktu }),
       });
