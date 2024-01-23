@@ -58,7 +58,7 @@ function ResponsePostLogin(response) {
         setCookieWithExpireHour('login', response.data, 2);
 
         // Redirect to the dashboard page
-        window.location.href = 'https://harisriyoni.github.io/penjahit/public/dashboard.html';
+        window.location.href = 'https://harisriyoni.github.io/penjahit/public/index.html';
 
         // Display a success message
         Swal.fire({
