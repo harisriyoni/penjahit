@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,25 +8,37 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <title>Login Page</title>
 </head>
+
 <body class="bg-gray-100 flex items-center justify-center h-screen">
 
-<div class="bg-white p-8 shadow-md rounded-md w-96 animate__animated animate__fadeIn animate__slow animate__flash">
-    <h1 class="text-3xl font-semibold mb-6 text-center text-blue-500">Login</h1>
-    <form action="#" method="post">
-        <div class="mb-4">
-            <label for="username" class="block text-sm font-medium text-gray-600 mb-1">Username</label>
-            <input type="text" id="username" name="username" class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500">
+    <div class="bg-white p-8 shadow-md rounded-md w-96 animate__animated animate__fadeIn animate__slow animate__flash">
+        <h1 class="text-3xl font-semibold mb-6 text-center text-blue-500">Login</h1>
+        <form action="#" method="post">
+            <div class="mb-4">
+                <label for="username" class="block text-sm font-medium text-gray-600 mb-1">Username</label>
+                <input type="text" id="username" name="username"
+                    class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500">
+            </div>
+            <div class="mb-4">
+                <label for="password" class="block text-sm font-medium text-gray-600 mb-1">Password</label>
+                <input type="password" id="password" name="password"
+                    class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500">
+            </div>
+            <button type="submit"
+                class="bg-blue-500 text-white p-2 rounded-md w-full hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue">Login</button>
+        </form>
+        <div class="mt-4 text-center">
+            <p class="text-gray-600">Belum punya akun? <a href="register.html" class="text-blue-500">Register</a></p>
         </div>
-        <div class="mb-4">
-            <label for="password" class="block text-sm font-medium text-gray-600 mb-1">Password</label>
-            <input type="password" id="password" name="password" class="mt-1 p-2 w-full border rounded-md focus:outline-none focus:border-blue-500">
-        </div>
-        <button type="submit" class="bg-blue-500 text-white p-2 rounded-md w-full hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue">Login</button>
-    </form>
-    <div class="mt-4 text-center">
-        <p class="text-gray-600">Belum punya akun? <a href="register.html" class="text-blue-500">Register</a></p>
     </div>
-</div>
+
+    <!-- Sweet Alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
+
+    <script type="module"
+        src="https://cdn.jsdelivr.net/gh/pakarbi/js-pakarbi@0.8.6/js/user/controller/controllerLogin.js">
+    </script>
 
 </body>
+
 </html>
