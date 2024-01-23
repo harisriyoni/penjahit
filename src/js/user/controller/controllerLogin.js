@@ -13,7 +13,7 @@ import {
 } from '../template/template.js';
 
 document.addEventListener("DOMContentLoaded", function () {
-    const form = document.getElementById("post");
+    const form = document.getElementById("formlogin");
     form.addEventListener("submit", function (event) {
         event.preventDefault();
         let data = PostLogin();
