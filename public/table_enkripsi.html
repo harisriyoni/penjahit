@@ -9,6 +9,8 @@
   <link rel="stylesheet" href="assets/css/tailwind.css" />
   <script src="assets/js/vendor/alpine.js" defer></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
 </head>
 
 <body class="antialiased text-gray-900 bg-white">
@@ -405,6 +407,12 @@
 
       <!-- Main content -->
       <main class="flex-1 max-h-full p-5 overflow-hidden overflow-y-scroll">
+
+        <h1 class="text-2xl font-semibold whitespace-nowrap">Amankan Data Rekap Kamu</h1>
+
+        <button id="executeButton" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          Enkripsi Data Rekap
+      </button>
         <!-- Main content header -->
         <div class="
               flex flex-col
@@ -422,34 +430,43 @@
           <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
               <div class="overflow-hidden border-b border-gray-200 rounded-md shadow-md">
-                <table class="min-w-full overflow-x-scroll divide-y divide-gray-200">
-                  <thead class="bg-gray-50">
-                    <tr>
-                      <th scope="col"
-                        class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                        Name Customer
-                      </th>
-                      <th scope="col"
-                        class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                        Order
-                      </th>
-                      <th scope="col"
-                        class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                        Harga
-                      </th>
-                      <th scope="col"
-                        class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
-                        Tanggal
-                      </th>
-                      <th scope="col" class="relative px-6 py-3">
-                        <span class="sr-only">Edit</span>
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody id="dataBody" class="bg-white divide-y divide-gray-200">
-                     
-                  </tbody>
-                </table>
+               
+    <!-- Formulir untuk mengirim permintaan POST -->
+    <form id="getDataForm" class="mb-8">
+      <label for="waktu" class="block mb-2">Waktu:</label>
+      <input type="text" id="waktu" name="waktu" placeholder="Format: DD/MM/YYYY" required
+          class="border border-gray-300 px-2 py-1 mb-2">
+      <button type="button" onclick="getData()"
+          class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+          Get Data
+      </button>
+  </form>
+
+  <!-- Tabel untuk menampilkan respons data -->
+      <table id="dataTable" class="min-w-full overflow-x-scroll divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th scope="col"
+                class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+               ID Notes
+              </th>
+              <th scope="col"
+                class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                Date Time
+              </th>
+              <th scope="col"
+                class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                Order Data
+              </th>
+              <th scope="col"
+                class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 uppercase">
+                Nominal
+              </th>
+          </thead>
+      <tbody>
+      </tbody>
+  </table>
+
               </div>
             </div>
           </div>
@@ -519,8 +536,11 @@
       }
     }
   </script>
-  <script type="module" src="https://cdn.jsdelivr.net/gh/harisriyoni/penjahit@3a36acd210552ffc4609aa8f517c9f099919bcbd/src/js/get_pendapatan.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+  <script  src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+  <script  src="/src/js/get_encript.js"></script>
+<script src="/src/js/enkript_button.js"></script>
+
+
 </body>
 
 </html>
