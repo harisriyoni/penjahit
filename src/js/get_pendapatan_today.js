@@ -1,9 +1,23 @@
+const getTokenFromCookies = (cookieName) => {
+    const cookies = document.cookie.split(';');
+    for (const cookie of cookies) {
+        const [name, value] = cookie.trim().split('=');
+        if (name === cookieName) {
+            return value;
+        }
+    }
+    return null;
+};
+
 const deleteData = async (customerName) => {
     try {
+        const token = getTokenFromCookies('login');
+
         const response = await fetch('https://lap-umkm.herokuapp.com/ksi/delete', {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
+                'login': token
             },
             body: JSON.stringify({
                 customerName: customerName
@@ -45,15 +59,83 @@ const deleteData = async (customerName) => {
         });
     }
 };
+
+const updateData = async (idNotes) => {
+    try {
+        const token = getTokenFromCookies('login');
+
+        const response = await fetch('https://lap-umkm.herokuapp.com/ksi/getid', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'login': token
+            },
+            body: JSON.stringify({
+                idNotes: idNotes,
+            }),
+        });
+
+        const data = await response.json();
+
+        if (data.code === 200 && data.success) {
+            // Menampilkan SweetAlert
+            Swal.fire({
+                title: 'Success',
+                text: 'Data successfully updated!',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 1500
+            });
+
+            // Fetch data again after update
+            fetchData();
+        } else {
+            console.error('Failed to update data:', data.status);
+            // Menampilkan SweetAlert untuk kesalahan
+            Swal.fire({
+                title: 'Error',
+                text: `Failed to update data: ${data.status}`,
+                icon: 'error',
+                showConfirmButton: true
+            });
+        }
+    } catch (error) {
+        console.error('Error updating data:', error);
+        // Menampilkan SweetAlert untuk kesalahan
+        Swal.fire({
+            title: 'Error',
+            text: 'Error updating data. Please try again.',
+            icon: 'error',
+            showConfirmButton: true
+        });
+    }
+};
+
 const handleDeleteButtonClick = (customerName) => {
     return () => {
         deleteData(customerName);
     };
 };
 
+const handleUpdateButtonClick = (idNotes) => {
+    return () => {
+        // Mendapatkan data yang ingin diubah dari pengguna (misalnya, formulir input)
+        updateData(idNotes);
+    };
+};
+
 const fetchData = async () => {
     try {
-        const response = await fetch('https://lap-umkm.herokuapp.com/ksi/today');
+        const token = getTokenFromCookies('login');
+
+        const response = await fetch('https://lap-umkm.herokuapp.com/ksi/today', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'login': token
+            },
+        });
+
         const data = await response.json();
 
         if (data.code === 200 && data.success) {
@@ -89,6 +171,7 @@ const fetchData = async () => {
                       <td class="py-2 px-4 text-sm text-gray-500 whitespace-nowrap">${entry.datetime}</td>
                       <td class="py-2 px-4 text-sm font-medium text-right whitespace-nowrap">
                           <button class="delete-button text-red-600 hover:text-red-900" data-customername="${entry.customerName}">Delete</button>
+                          <button class="update-button text-blue-600 hover:text-blue-900" data-idnotes="${entry.idNotes}">Update</button>
                       </td>
                   </tr>
               `;
@@ -102,6 +185,13 @@ const fetchData = async () => {
                 const customerName = button.dataset.customername;
                 button.addEventListener('click', handleDeleteButtonClick(customerName));
             });
+
+            // Set up event listeners for update buttons
+            const updateButtons = document.querySelectorAll('.update-button');
+            updateButtons.forEach(button => {
+                const idNotes = button.dataset.idnotes;
+                button.addEventListener('click', handleUpdateButtonClick(idNotes));
+            });
         } else {
             console.error('Failed to fetch data:', data.status);
         }
@@ -110,11 +200,16 @@ const fetchData = async () => {
     }
 };
 
-// Event delegation for delete buttons
+// Event delegation for delete and update buttons
 document.getElementById('dataBody').addEventListener('click', (event) => {
-    if (event.target.classList.contains('delete-button')) {
-        const customerName = event.target.dataset.customername;
-        deleteData(customerName);
+    const actionMapping = {
+        'delete-button': deleteData,
+        'update-button': (target) => handleUpdateButtonClick(target.dataset.idnotes)(),
+    };
+
+    const action = actionMapping[event.target.classList[0]];
+    if (action) {
+        action(event.target);
     }
 });
 
