@@ -4,7 +4,7 @@ import {
 
 //token api
 export function getTokenFromAPI() {
-    const tokenUrl = "http://127.0.0.1:8080/ksi/users/login";
+    const tokenUrl = "https://lap-umkm.herokuapp.com/ksi/users/login";
     fetch(tokenUrl)
         .then(response => response.json())
         .then(tokenData => {
