@@ -55,7 +55,7 @@ function validateLogin(callback) {
 // response post login
 function ResponsePostLogin(response) {
     if (response && response.token) {
-        setCookieWithExpireHour('login', response.token, 2);
+        setCookieWithExpireHour('data', response.token, 2);
         window.location.href = 'https://harisriyoni.github.io/penjahit/public/dashboard.html';
         Swal.fire({
             icon: 'success',
