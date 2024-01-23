@@ -79,7 +79,6 @@ const updateData = async (idNotes) => {
         const data = await response.json();
 
         if (data.code === 200 && data.success) {
-            window.location.href = 'pend_update.html';
             // Mengisi formulir dengan data yang diperoleh
             document.getElementById('datetime').value = data.datetime;
             document.getElementById('customerName').value = data.customerName;
