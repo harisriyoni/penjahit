@@ -6,13 +6,17 @@ document.getElementById('umkmForm').addEventListener('submit', async (event) => 
             datetime: document.getElementById('datetime').value,
             customerName: document.getElementById('customerName').value,
             ordersData: document.getElementById('ordersData').value.split(','),
-            nominal: document.getElementById('nominal').value
+            nominal: document.getElementById('nominal').value,
+            idNotes: document.getElementById('idNotes').value // Tambahkan field idNotes
         };
+
+        const token = getTokenFromCookies('login');
 
         const response = await fetch('https://lap-umkm.herokuapp.com/ksi/post', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Login': token,
             },
             body: JSON.stringify(formData)
         });
@@ -49,3 +53,14 @@ document.getElementById('umkmForm').addEventListener('submit', async (event) => 
         });
     }
 });
+
+const getTokenFromCookies = (cookieName) => {
+    const cookies = document.cookie.split(';');
+    for (const cookie of cookies) {
+        const [name, value] = cookie.trim().split('=');
+        if (name === cookieName) {
+            return value;
+        }
+    }
+    return null;
+};
