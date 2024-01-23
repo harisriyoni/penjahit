@@ -18,13 +18,15 @@ export function getTokenFromAPI() {
 
 // post login
 export function PostLogin() {
-    const npm = document.getElementById("username").value;
-    const passwordhash = document.getElementById("password").value;
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+    const role = document.getElementById("role").value;
 
 
     const data = {
-        npm: npm,
-        passwordhash: passwordhash,
+        username: username,
+        password: password,
+        role: role,
     };
     return data;
 }
@@ -36,7 +38,7 @@ export function AlertPost(value) {
         title: 'Daftar Berhasil',
         text: 'Anda telah berhasil daftar!',
     });
-    window.location.href = "login.html"
+    window.location.href = "dashboard.html"
 }
 
 function validateLogin(callback) {
