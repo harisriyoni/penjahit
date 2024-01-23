@@ -76,18 +76,18 @@ const updateData = async (idNotes) => {
             }),
         });
 
-        
         const data = await response.json();
 
         if (data.code === 200 && data.success) {
-            // Mengarahkan ke halaman pend_update.html terlebih dahulu
-            window.location.href = 'https://harisriyoni.github.io/penjahit/public/pend_update.html';
-
-            // Setelah pindah halaman, mengisi formulir dengan data yang diperoleh
+            window.location.href = 'pend_update.html';
+            // Mengisi formulir dengan data yang diperoleh
             document.getElementById('datetime').value = data.datetime;
             document.getElementById('customerName').value = data.customerName;
             document.getElementById('ordersData').value = data.ordersData;
             document.getElementById('nominal').value = data.nominal;
+
+            // Mengarahkan ke halaman pend_update.html
+            window.location.href = 'pend_update.html';
         } else {
             console.error('Failed to fetch data for update:', data.status);
             // Menampilkan SweetAlert untuk kesalahan
