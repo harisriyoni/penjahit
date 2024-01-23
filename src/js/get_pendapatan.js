@@ -1,67 +1,69 @@
 const deleteData = async (customerName) => {
-  try {
-      const response = await fetch('https://lap-umkm.herokuapp.com/ksi/delete', {
-          method: 'DELETE',
-          headers: {
-              'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ customerName: customerName }),
-      });
+    try {
+        const response = await fetch('https://lap-umkm.herokuapp.com/ksi/delete', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                customerName: customerName
+            }),
+        });
 
-      const data = await response.json();
+        const data = await response.json();
 
-      if (data.code === 200 && data.success) {
-          // Menampilkan SweetAlert
-          Swal.fire({
-              title: 'Success',
-              text: 'Data successfully deleted!',
-              icon: 'success',
-              showConfirmButton: false,
-              timer: 1500
-          });
+        if (data.code === 200 && data.success) {
+            // Menampilkan SweetAlert
+            Swal.fire({
+                title: 'Success',
+                text: 'Data successfully deleted!',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 1500
+            });
 
-          // Fetch data again after deletion
-          fetchData();
-      } else {
-          console.error('Failed to delete data:', data.status);
-          // Menampilkan SweetAlert untuk kesalahan
-          Swal.fire({
-              title: 'Error',
-              text: `Failed to delete data: ${data.status}`,
-              icon: 'error',
-              showConfirmButton: true
-          });
-      }
-  } catch (error) {
-      console.error('Error deleting data:', error);
-      // Menampilkan SweetAlert untuk kesalahan
-      Swal.fire({
-          title: 'Error',
-          text: 'Error deleting data. Please try again.',
-          icon: 'error',
-          showConfirmButton: true
-      });
-  }
+            // Fetch data again after deletion
+            fetchData();
+        } else {
+            console.error('Failed to delete data:', data.status);
+            // Menampilkan SweetAlert untuk kesalahan
+            Swal.fire({
+                title: 'Error',
+                text: `Failed to delete data: ${data.status}`,
+                icon: 'error',
+                showConfirmButton: true
+            });
+        }
+    } catch (error) {
+        console.error('Error deleting data:', error);
+        // Menampilkan SweetAlert untuk kesalahan
+        Swal.fire({
+            title: 'Error',
+            text: 'Error deleting data. Please try again.',
+            icon: 'error',
+            showConfirmButton: true
+        });
+    }
 };
 const handleDeleteButtonClick = (customerName) => {
-  return () => {
-      deleteData(customerName);
-  };
+    return () => {
+        deleteData(customerName);
+    };
 };
 
 const fetchData = async () => {
-  try {
-      const response = await fetch('https://lap-umkm.herokuapp.com/ksi/get');
-      const data = await response.json();
+    try {
+        const response = await fetch('https://lap-umkm.herokuapp.com/ksi/get');
+        const data = await response.json();
 
-      if (data.code === 200 && data.success) {
-          const tbody = document.getElementById('dataBody');
-          tbody.innerHTML = '';
+        if (data.code === 200 && data.success) {
+            const tbody = document.getElementById('dataBody');
+            tbody.innerHTML = '';
 
-          data.data.forEach(entry => {
-              const orders = entry.ordersData.join(', ');
+            data.data.forEach(entry => {
+                const orders = entry.ordersData.join(', ');
 
-              const row = `
+                const row = `
                   <tr class="data-row transition-all hover:bg-gray-100 hover:shadow-lg">
                       <td class="py-2 px-4 whitespace-nowrap">
                           <div class="flex items-center">
@@ -91,29 +93,29 @@ const fetchData = async () => {
                   </tr>
               `;
 
-              tbody.innerHTML += row;
-          });
+                tbody.innerHTML += row;
+            });
 
-          // Set up event listeners for delete buttons
-          const deleteButtons = document.querySelectorAll('.delete-button');
-          deleteButtons.forEach(button => {
-              const customerName = button.dataset.customername;
-              button.addEventListener('click', handleDeleteButtonClick(customerName));
-          });
-      } else {
-          console.error('Failed to fetch data:', data.status);
-      }
-  } catch (error) {
-      console.error('Error fetching data:', error);
-  }
+            // Set up event listeners for delete buttons
+            const deleteButtons = document.querySelectorAll('.delete-button');
+            deleteButtons.forEach(button => {
+                const customerName = button.dataset.customername;
+                button.addEventListener('click', handleDeleteButtonClick(customerName));
+            });
+        } else {
+            console.error('Failed to fetch data:', data.status);
+        }
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
 };
 
 // Event delegation for delete buttons
 document.getElementById('dataBody').addEventListener('click', (event) => {
-  if (event.target.classList.contains('delete-button')) {
-      const customerName = event.target.dataset.customername;
-      deleteData(customerName);
-  }
+    if (event.target.classList.contains('delete-button')) {
+        const customerName = event.target.dataset.customername;
+        deleteData(customerName);
+    }
 });
 
 // Fetch initial data
