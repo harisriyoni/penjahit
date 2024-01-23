@@ -12,7 +12,7 @@ function logout() {
   }).then((result) => {
     if (result.isConfirmed) {
       deleteCookie('login');
-      window.location.href = 'pages/login.html';
+      window.location.href = 'login.html';
     }
   });
 }

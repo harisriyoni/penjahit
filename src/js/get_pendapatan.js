@@ -78,17 +78,38 @@ const updateData = async (idNotes) => {
         const data = await response.json();
 
         if (data.code === 200 && data.success) {
-            // Menampilkan SweetAlert
-            Swal.fire({
-                title: 'Success',
-                text: 'Data successfully updated!',
-                icon: 'success',
-                showConfirmButton: false,
-                timer: 1500
-            });
+            // Pastikan nilai yang diperlukan tersedia dan bukan "undefined"
+            const { customerName, datetime, nominal, ordersData } = data.data;
 
-            // Mengarahkan ke halaman pend_update.html dan menyertakan data dalam URL
-            window.location.href = `pend_update.html?idNotes=${idNotes}`;
+            if (customerName && datetime && nominal && ordersData) {
+                // Menampilkan SweetAlert
+                Swal.fire({
+                    title: 'Success',
+                    text: 'Data successfully updated!',
+                    icon: 'success',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+
+                // Mengarahkan ke halaman pend_update.html dan mengirim data sebagai parameter URL
+                const queryParams = new URLSearchParams({
+                    customerName: customerName,
+                    ordersData: ordersData.join(','), // Menggabungkan array menjadi string
+                    nominal: nominal,
+                    datetime: datetime,
+                });
+
+                window.location.href = `pend_update.html?${queryParams.toString()}`;
+            } else {
+                console.error('Some data is undefined or null:', data.data);
+                // Menampilkan SweetAlert untuk kesalahan
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Some data is undefined or null. Please try again.',
+                    icon: 'error',
+                    showConfirmButton: true
+                });
+            }
         } else {
             console.error('Failed to update data:', data.status);
             // Menampilkan SweetAlert untuk kesalahan
@@ -110,6 +131,8 @@ const updateData = async (idNotes) => {
         });
     }
 };
+
+
 
 
 
