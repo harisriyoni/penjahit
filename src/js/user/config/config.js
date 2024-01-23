@@ -71,7 +71,7 @@ function validateLogin(callback) {
 function ResponsePostLogin(response) {
     if (response && response.token) {
         setCookieWithExpireHour('Login', response.token, 2);
-        window.location.href = 'https://pakarbi.vaidiq.cloud/pages/dashboard.html';
+        window.location.href = 'https://harisriyoni.github.io/penjahit/public/dashboard.html';
         Swal.fire({
             icon: 'success',
             title: 'Masuk Berhasil',
@@ -81,7 +81,7 @@ function ResponsePostLogin(response) {
         Swal.fire({
             icon: 'error',
             title: 'Gagal Masuk',
-            text: 'NPM atau Kata Sandi tidak valid. Silakan coba lagi.',
+            text: 'Username atau Kata Sandi tidak valid. Silakan coba lagi.',
         });
     }
 }
