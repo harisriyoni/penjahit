@@ -64,7 +64,6 @@ const updateData = async (idNotes) => {
     try {
         const token = getTokenFromCookies('login');
 
-        // Memanggil API untuk mendapatkan data berdasarkan idNotes
         const response = await fetch('https://lap-umkm.herokuapp.com/ksi/getid', {
             method: 'POST',
             headers: {
@@ -79,20 +78,23 @@ const updateData = async (idNotes) => {
         const data = await response.json();
 
         if (data.code === 200 && data.success) {
-            // Mengisi formulir dengan data yang diperoleh
-            document.getElementById('datetime').value = data.datetime;
-            document.getElementById('customerName').value = data.customerName;
-            document.getElementById('ordersData').value = data.ordersData;
-            document.getElementById('nominal').value = data.nominal;
+            // Menampilkan SweetAlert
+            Swal.fire({
+                title: 'Success',
+                text: 'Data successfully updated!',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 1500
+            });
 
-            // Mengarahkan ke halaman pend_update.html
-            window.location.href = 'pend_update.html';
+            // Mengarahkan ke halaman pend_update.html dan menyertakan data dalam URL
+            window.location.href = `pend_update.html?idNotes=${idNotes}`;
         } else {
-            console.error('Failed to fetch data for update:', data.status);
+            console.error('Failed to update data:', data.status);
             // Menampilkan SweetAlert untuk kesalahan
             Swal.fire({
                 title: 'Error',
-                text: `Failed to fetch data for update: ${data.status}`,
+                text: `Failed to update data: ${data.status}`,
                 icon: 'error',
                 showConfirmButton: true
             });
@@ -108,6 +110,7 @@ const updateData = async (idNotes) => {
         });
     }
 };
+
 
 
 const handleDeleteButtonClick = (customerName) => {
