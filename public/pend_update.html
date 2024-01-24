@@ -311,6 +311,22 @@
     </div>
   </div>
   <script>
+          // Dapatkan parameter URL setelah tanda tanya (?)
+          const queryParams = new URLSearchParams(window.location.search);
+      
+      // Ambil nilai dari parameter sesuai dengan nama propertinya
+      const customerName = queryParams.get('customerName');
+      const ordersData = queryParams.get('ordersData');
+      const nominal = queryParams.get('nominal');
+      const datetime = queryParams.get('datetime');
+  
+      // Isikan nilai-nilai ke dalam formulir
+      document.getElementById('customerName').value = customerName;
+      document.getElementById('ordersData').value = ordersData;
+      document.getElementById('nominal').value = nominal;
+      document.getElementById('datetime').value = datetime;
+  </script>
+  <script>
     const setup = () => {
       return {
         loading: true,
